@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="da" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Den naturlige fodplejer | Michala Mikkelsen</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: {
+                            50: '#f4f7f4',
+                            100: '#e3eae3',
+                            200: '#c7d6c8',
+                            300: '#a3bba5',
+                            400: '#7c9c7f',
+                            500: '#5c7f60',
+                            600: '#47654b',
+                            700: '#3a523d',
+                            800: '#304233',
+                            900: '#29372b',
+                        },
+                        warmbg: '#FAF8F5',
+                        earth: '#8C7A6B',
+                        clay: '#D98A6C'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FAF8F5;
+            color: #29372b;
+        }
+        .bg-pattern {
+            background-image: radial-gradient(#7c9c7f 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+            opacity: 0.15;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(227, 234, 227, 0.6);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col justify-between selection:bg-sage-200 selection:text-sage-900">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 bg-warmbg/90 backdrop-blur-md border-b border-sage-100 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-full bg-sage-100 flex items-center justify-center text-sage-600 group-hover:bg-sage-500 group-hover:text-white transition-all shadow-sm">
+                        <i class="fa-solid font-serif text-lg">🌿</i>
+                    </div>
+                    <div>
+                        <span class="font-serif text-xl sm:text-2xl font-semibold text-sage-900 block leading-tight">Den naturlige fodplejer</span>
+                        <span class="text-xs text-sage-600 font-medium tracking-wider uppercase">v/ Michala Mikkelsen</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center space-x-7 text-sm font-medium text-sage-800">
+                    <a href="#forside" class="hover:text-sage-500 transition-colors">Forside</a>
+                    <a href="#behandlinger" class="hover:text-sage-500 transition-colors">Behandlinger & Priser</a>
+                    <a href="#booking" class="hover:text-sage-500 transition-colors">Online Booking</a>
+                    <a href="#fordele" class="hover:text-sage-500 transition-colors">Klinikken</a>
+                    <a href="#kontakt" class="hover:text-sage-500 transition-colors">Kontakt & Åbningstider</a>
+                </nav>
+
+                <!-- Actions Buttons -->
+                <div class="hidden sm:flex items-center space-x-3">
+                    <button onclick="toggleModal('login-modal')" class="px-4 py-2 text-sm font-medium text-sage-700 hover:text-sage-900 hover:bg-sage-100/60 rounded-full transition-all">
+                        <i class="fa-regular fa-user mr-1.5"></i> Kundelogin
+                    </button>
+                    <a href="#booking" class="px-5 py-2.5 text-sm font-medium text-white bg-sage-600 hover:bg-sage-700 rounded-full shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-regular fa-calendar-check mr-1.5"></i> Book tid
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex lg:hidden items-center gap-2">
+                    <button onclick="toggleModal('login-modal')" class="sm:hidden p-2 text-sage-700 hover:bg-sage-100 rounded-full">
+                        <i class="fa-regular fa-user text-lg"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="p-2 text-sage-800 hover:bg-sage-100 rounded-xl transition-all">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-warmbg border-b border-sage-100 px-4 pt-2 pb-6 space-y-3">
+            <a href="#forside" class="block px-3 py-2 rounded-lg text-base font-medium text-sage-800 hover:bg-sage-100">Forside</a>
+            <a href="#behandlinger" class="block px-3 py-2 rounded-lg text-base font-medium text-sage-800 hover:bg-sage-100">Behandlinger & Priser</a>
+            <a href="#booking" class="block px-3 py-2 rounded-lg text-base font-medium text-sage-800 hover:bg-sage-100">Online Booking</a>
+            <a href="#fordele" class="block px-3 py-2 rounded-lg text-base font-medium text-sage-800 hover:bg-sage-100">Klinikken</a>
+            <a href="#kontakt" class="block px-3 py-2 rounded-lg text-base font-medium text-sage-800 hover:bg-sage-100">Kontakt & Åbningstider</a>
+            <div class="pt-2 border-t border-sage-200/60 flex flex-col gap-2">
+                <a href="#booking" class="w-full text-center px-5 py-3 text-sm font-medium text-white bg-sage-600 rounded-xl shadow-sm">
+                    Book tid nu
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- HERO SECTION -->
+        <section id="forside" class="relative py-16 lg:py-24 overflow-hidden">
+            <div class="absolute inset-0 bg-pattern pointer-events-none"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sage-100 text-sage-800 text-xs sm:text-sm font-medium border border-sage-200">
+                            <span class="w-2 h-2 rounded-full bg-sage-500 animate-pulse"></span>
+                            Prof. Fodpleje & Holistisk Terapi i Assens
+                        </div>
+
+                        <h1 class="font-serif text-3xl sm:text-5xl lg:text-6xl font-semibold text-sage-900 leading-tight">
+                            Sammen kan vi klare alt med <span class="italic text-sage-600">dig i fokus</span>.
+                        </h1>
+
+                        <p class="text-lg sm:text-xl text-sage-700 font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                            "Det er lettere at forebygge end at helbrede." Hos Michala Mikkelsen får du nærende, faglig og omsorgsfuld fodpleje tilpasset præcis dine behov.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                            <a href="#booking" class="w-full sm:w-auto px-8 py-4 text-base font-medium text-white bg-sage-600 hover:bg-sage-700 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-center">
+                                <i class="fa-regular fa-calendar-check mr-2"></i> Book tid i dag
+                            </a>
+                            <a href="#behandlinger" class="w-full sm:w-auto px-8 py-4 text-base font-medium text-sage-800 bg-white hover:bg-sage-50 border border-sage-200 rounded-full shadow-sm hover:shadow transition-all text-center">
+                                Se behandlinger & priser
+                            </a>
+                        </div>
+
+                        <!-- Highlights / Badges -->
+                        <div class="pt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-sage-200/60 mt-8">
+                            <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/60 border border-sage-100">
+                                <div class="w-10 h-10 rounded-xl bg-sage-100 flex items-center justify-center text-sage-700 shrink-0">
+                                    <i class="fa-solid fa-square-parking text-lg"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h4 class="text-xs font-bold text-sage-900">Egen Parkering</h4>
+                                    <p class="text-xs text-sage-600">Lige ved døren</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/60 border border-sage-100">
+                                <div class="w-10 h-10 rounded-xl bg-sage-100 flex items-center justify-center text-sage-700 shrink-0">
+                                    <i class="fa-solid fa-wheelchair text-lg"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h4 class="text-xs font-bold text-sage-900">Handicapvenligt</h4>
+                                    <p class="text-xs text-sage-600">Niveau fri adgang</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/60 border border-sage-100">
+                                <div class="w-10 h-10 rounded-xl bg-sage-100 flex items-center justify-center text-sage-700 shrink-0">
+                                    <i class="fa-solid fa-couch text-lg"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h4 class="text-xs font-bold text-sage-900">Massagestole</h4>
+                                    <p class="text-xs text-sage-600">Nydes i venteværelset</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hero Visual Card -->
+                    <div class="lg:col-span-5">
+                        <div class="relative mx-auto max-w-md lg:max-w-none">
+                            <div class="absolute -inset-2 rounded-3xl bg-gradient-to-r from-sage-300 to-earth/20 blur-xl opacity-50"></div>
+                            <div class="relative glass-card rounded-3xl p-6 sm:p-8 shadow-xl border border-white/60">
+                                <div class="relative h-72 sm:h-80 rounded-2xl overflow-hidden mb-6 bg-sage-200">
+                                    <img src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=800&q=80" alt="Ren afslapning og fodpleje" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-sage-900/60 via-transparent to-transparent"></div>
+                                    <div class="absolute bottom-4 left-4 right-4 text-white">
+                                        <p class="text-xs uppercase tracking-widest text-sage-200 font-semibold">Naturlig Omsorg</p>
+                                        <h3 class="text-lg font-serif font-medium">Forkæl dine fødder med nærende urtesalt & professionel pleje</h3>
+                                    </div>
+                                </div>
+
+                                <blockquote class="text-sage-800 text-sm italic mb-4">
+                                    "Fødderne bærer os gennem hele livet. Giv dem den opmærksomhed og behandling, de fortjener."
+                                </blockquote>
+
+                                <div class="flex items-center justify-between text-xs text-sage-600 border-t border-sage-100 pt-4">
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-sage-500"></i> Drejervænget 8, Assens</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-phone text-sage-500"></i> 36 20 02 21</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- BOOKING SECTION (Interactive Wizard) -->
+        <section id="booking" class="py-16 bg-white border-y border-sage-100">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="text-xs font-bold tracking-widest text-sage-600 uppercase">Hurtig & Nem Bestilling</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-sage-900 mt-1">Book din tid online</h2>
+                    <p class="text-sage-600 text-sm mt-2">Vælg din ønskede behandling og tidspunkt i 3 enkle trin.</p>
+                </div>
+
+                <!-- Booking Container -->
+                <div class="glass-card rounded-3xl p-6 sm:p-10 shadow-lg border border-sage-100 bg-warmbg/40">
+                    
+                    <!-- Progress Bar / Wizard Header -->
+                    <div class="mb-8">
+                        <div class="flex items-center justify-between max-w-xs sm:max-w-md mx-auto relative">
+                            <!-- Line -->
+                            <div class="absolute top-1/2 left-0 right-0 h-0.5 bg-sage-200 -z-0 -translate-y-1/2"></div>
+                            <div id="step-line" class="absolute top-1/2 left-0 h-0.5 bg-sage-600 -z-0 -translate-y-1/2 transition-all duration-300" style="width: 0%;"></div>
+
+                            <!-- Step 1 Circle -->
+                            <div id="step-btn-1" class="relative z-10 w-9 h-9 rounded-full bg-sage-600 text-white font-semibold text-sm flex items-center justify-center shadow-md transition-all">
+                                1
+                            </div>
+                            <!-- Step 2 Circle -->
+                            <div id="step-btn-2" class="relative z-10 w-9 h-9 rounded-full bg-sage-100 text-sage-600 font-semibold text-sm flex items-center justify-center border border-sage-200 transition-all">
+                                2
+                            </div>
+                            <!-- Step 3 Circle -->
+                            <div id="step-btn-3" class="relative z-10 w-9 h-9 rounded-full bg-sage-100 text-sage-600 font-semibold text-sm flex items-center justify-center border border-sage-200 transition-all">
+                                3
+                            </div>
+                        </div>
+                        <div class="flex justify-between max-w-xs sm:max-w-md mx-auto text-xs font-medium text-sage-600 mt-2 px-1">
+                            <span>Vælg Service</span>
+                            <span>Dato & Tid</span>
+                            <span>Bekræftelse</span>
+                        </div>
+                    </div>
+
+                    <!-- STEP 1: SELECT SERVICE -->
+                    <div id="booking-step-1" class="space-y-4">
+                        <h3 class="text-lg font-serif font-semibold text-sage-900 mb-4 border-b border-sage-200 pb-2 flex items-center justify-between">
+                            <span>Trin 1: Vælg behandling</span>
+                            <span class="text-xs font-sans font-normal text-sage-600">Klik på en service for at fortsætte</span>
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                            <!-- Option 1 -->
+                            <label class="service-card cursor-pointer border-2 border-sage-200 rounded-2xl p-4 bg-white hover:border-sage-500 transition-all block relative">
+                                <input type="radio" name="service" value="Alm. Fodbehandling i klinikken|60 min.|500 kr" class="hidden" onchange="selectService(this)">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-semibold text-sage-900 text-base">Alm. Fodbehandling i klinikken</h4>
+                                    <span class="text-xs bg-sage-100 text-sage-800 px-2.5 py-1 rounded-full font-bold">500 kr</span>
+                                </div>
+                                <p class="text-xs text-sage-600 line-clamp-2">Fodbad m. urtesalt, beskæring af hård hud/vorter, negleklip, slib, rense, negleolie, creme & rådgivning.</p>
+                                <div class="mt-3 text-xs text-sage-500 font-medium flex items-center gap-1">
+                                    <i class="fa-regular fa-clock"></i> 60 min.
+                                </div>
+                            </label>
+
+                            <!-- Option 2 -->
+                            <label class="service-card cursor-pointer border-2 border-sage-200 rounded-2xl p-4 bg-white hover:border-sage-500 transition-all block relative">
+                                <input type="radio" name="service" value="Alm. Fodbehandling m. Ledundersøgelse|75 min.|600 kr" class="hidden" onchange="selectService(this)">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-semibold text-sage-900 text-base">Alm. Fodbehandling w/ Ledundersøgelse</h4>
+                                    <span class="text-xs bg-sage-100 text-sage-800 px-2.5 py-1 rounded-full font-bold">600 kr</span>
+                                </div>
+                                <p class="text-xs text-sage-600 line-clamp-2">Inkluderer grundig ledundersøgelse samt den fulde almindelige fodbehandling.</p>
+                                <div class="mt-3 text-xs text-sage-500 font-medium flex items-center gap-1">
+                                    <i class="fa-regular fa-clock"></i> 75 min.
+                                </div>
+                            </label>
+
+                            <!-- Option 3 -->
+                            <label class="service-card cursor-pointer border-2 border-sage-200 rounded-2xl p-4 bg-white hover:border-sage-500 transition-all block relative">
+                                <input type="radio" name="service" value="Del behandling (Negle eller Hård hud)|30 min.|400 kr" class="hidden" onchange="selectService(this)">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-semibold text-sage-900 text-base">Del behandling</h4>
+                                    <span class="text-xs bg-sage-100 text-sage-800 px-2.5 py-1 rounded-full font-bold">400 kr</span>
+                                </div>
+                                <p class="text-xs text-sage-600 line-clamp-2">Fokuseret delvis behandling af enten dine negle ELLER hård hud.</p>
+                                <div class="mt-3 text-xs text-sage-500 font-medium flex items-center gap-1">
+                                    <i class="fa-regular fa-clock"></i> 30 min.
+                                </div>
+                            </label>
+
+                            <!-- Option 4 -->
+                            <label class="service-card cursor-pointer border-2 border-sage-200 rounded-2xl p-4 bg-white hover:border-sage-500 transition-all block relative">
+                                <input type="radio" name="service" value="Udvidet Fodbehandling|90 min.|750 kr" class="hidden" onchange="selectService(this)">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-semibold text-sage-900 text-base">Udvidet Fodbehandling</h4>
+                                    <span class="text-xs bg-sage-100 text-sage-800 px-2.5 py-1 rounded-full font-bold">750 kr</span>
+                                </div>
+                                <p class="text-xs text-sage-600 line-clamp-2">Ekstra fordybelse og behandling til fødder med ekstra plejebehov.</p>
+                                <div class="mt-3 text-xs text-sage-500 font-medium flex items-center gap-1">
+                                    <i class="fa-regular fa-clock"></i> 90 min.
+                                </div>
+                            </label>
+
+                            <!-- Option 5 -->
+                            <label class="service-card cursor-pointer border-2 border-sage-200 rounded-2xl p-4 bg-white hover:border-sage-500 transition-all block relative">
+                                <input type="radio" name="service" value="Fodlæsning & Terapi|90 min.|900 kr" class="hidden" onchange="selectService(this)">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-semibold text-sage-900 text-base">Fodlæsning & Terapi</h4>
+                                    <span class="text-xs bg-sage-100 text-sage-800 px-2.5 py-1 rounded-full font-bold">900 kr</span>
+                                </div>
+                                <p class="text-xs text-sage-600 line-clamp-2">Bliv klogere på dig selv gennem en dybdegående holistisk fodlæsning og terapi session.</p>
+                                <div class="mt-3 text-xs text-sage-500 font-medium flex items-center gap-1">
+                                    <i class="fa-regular fa-clock"></i> 90 min. (Fysisk eller Online)
+                                </div>
+                            </label>
+
+                            <!-- Option 6 -->
+                            <label class="service-card cursor-pointer border-2 border-sage-200 rounded-2xl p-4 bg-white hover:border-sage-500 transition-all block relative">
+                                <input type="radio" name="service" value="Opbygning af kunstige negle tæer|15 min.|300 kr" class="hidden" onchange="selectService(this)">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-semibold text-sage-900 text-base">Opbygning af Kunstig Negl</h4>
+                                    <span class="text-xs bg-sage-100 text-sage-800 px-2.5 py-1 rounded-full font-bold">300 kr</span>
+                                </div>
+                                <p class="text-xs text-sage-600 line-clamp-2">Genopbygning af beskadiget eller manglende tånegl.</p>
+                                <div class="mt-3 text-xs text-sage-500 font-medium flex items-center gap-1">
+                                    <i class="fa-regular fa-clock"></i> 15 min.
+                                </div>
+                            </label>
+
+                        </div>
+
+                        <div class="mt-6 flex justify-end">
+                            <button id="btn-to-step-2" disabled onclick="goToStep(2)" class="px-6 py-3 bg-sage-300 text-white rounded-full font-medium transition-all opacity-60 cursor-not-allowed">
+                                Næste: Vælg Tidspunkt <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: DATE & TIME -->
+                    <div id="booking-step-2" class="space-y-6 hidden">
+                        <h3 class="text-lg font-serif font-semibold text-sage-900 border-b border-sage-200 pb-2 flex items-center justify-between">
+                            <span>Trin 2: Vælg Dato & Tid</span>
+                            <span id="selected-service-badge" class="text-xs font-sans font-semibold bg-sage-100 text-sage-800 px-3 py-1 rounded-full">Ingen valgt</span>
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Date picker mock -->
+                            <div>
+                                <label class="block text-xs font-bold text-sage-700 uppercase tracking-wider mb-2">Vælg Dato</label>
+                                <input type="date" id="booking-date" onchange="validateStep2()" class="w-full p-3 bg-white border border-sage-300 rounded-xl focus:ring-2 focus:ring-sage-500 focus:outline-none text-sage-800">
+                            </div>
+
+                            <!-- Time slots mock -->
+                            <div>
+                                <label class="block text-xs font-bold text-sage-700 uppercase tracking-wider mb-2">Ledige Tider</label>
+                                <div class="grid grid-cols-3 gap-2" id="time-slots">
+                                    <button type="button" onclick="selectTimeSlot(this)" class="time-btn p-2.5 border border-sage-200 bg-white rounded-xl text-xs font-semibold text-sage-800 hover:border-sage-500 transition-all">09:15</button>
+                                    <button type="button" onclick="selectTimeSlot(this)" class="time-btn p-2.5 border border-sage-200 bg-white rounded-xl text-xs font-semibold text-sage-800 hover:border-sage-500 transition-all">10:30</button>
+                                    <button type="button" onclick="selectTimeSlot(this)" class="time-btn p-2.5 border border-sage-200 bg-white rounded-xl text-xs font-semibold text-sage-800 hover:border-sage-500 transition-all">12:00</button>
+                                    <button type="button" onclick="selectTimeSlot(this)" class="time-btn p-2.5 border border-sage-200 bg-white rounded-xl text-xs font-semibold text-sage-800 hover:border-sage-500 transition-all">13:30</button>
+                                    <button type="button" onclick="selectTimeSlot(this)" class="time-btn p-2.5 border border-sage-200 bg-white rounded-xl text-xs font-semibold text-sage-800 hover:border-sage-500 transition-all">14:45</button>
+                                    <button type="button" onclick="selectTimeSlot(this)" class="time-btn p-2.5 border border-sage-200 bg-white rounded-xl text-xs font-semibold text-sage-800 hover:border-sage-500 transition-all">16:00</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex justify-between">
+                            <button onclick="goToStep(1)" class="px-5 py-2.5 border border-sage-300 text-sage-700 rounded-full font-medium hover:bg-sage-50 transition-all">
+                                <i class="fa-solid fa-arrow-left mr-1"></i> Tilbage
+                            </button>
+                            <button id="btn-to-step-3" disabled onclick="goToStep(3)" class="px-6 py-3 bg-sage-300 text-white rounded-full font-medium transition-all opacity-60 cursor-not-allowed">
+                                Næste: Kontaktoplysninger <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: CONTACT INFO & CONFIRM -->
+                    <div id="booking-step-3" class="space-y-6 hidden">
+                        <h3 class="text-lg font-serif font-semibold text-sage-900 border-b border-sage-200 pb-2">
+                            Trin 3: Dine Kontaktoplysninger
+                        </h3>
+
+                        <!-- Booking Summary -->
+                        <div class="bg-sage-100/60 border border-sage-200 p-4 rounded-2xl flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                            <div>
+                                <span class="text-xs uppercase text-sage-600 font-bold block">Valgt Behandling</span>
+                                <span id="summary-service" class="font-semibold text-sage-900 text-sm">-</span>
+                            </div>
+                            <div class="text-left sm:text-right">
+                                <span class="text-xs uppercase text-sage-600 font-bold block">Tidspunkt</span>
+                                <span id="summary-datetime" class="font-semibold text-sage-900 text-sm">-</span>
+                            </div>
+                        </div>
+
+                        <form id="booking-form" onsubmit="completeBooking(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-sage-700 mb-1">Fulde Navn *</label>
+                                    <input type="text" required placeholder="F.eks. Mette Hansen" class="w-full p-3 bg-white border border-sage-300 rounded-xl focus:ring-2 focus:ring-sage-500 focus:outline-none text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-sage-700 mb-1">Telefonnummer *</label>
+                                    <input type="tel" required placeholder="F.eks. 12345678" class="w-full p-3 bg-white border border-sage-300 rounded-xl focus:ring-2 focus:ring-sage-500 focus:outline-none text-sm">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-sage-700 mb-1">E-mailadresse *</label>
+                                <input type="email" required placeholder="din@email.dk" class="w-full p-3 bg-white border border-sage-300 rounded-xl focus:ring-2 focus:ring-sage-500 focus:outline-none text-sm">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-sage-700 mb-1">Eventuelle bemærkninger eller ønsker</label>
+                                <textarea rows="2" placeholder="F.eks. Ligtorn på højre fod, allergi mv." class="w-full p-3 bg-white border border-sage-300 rounded-xl focus:ring-2 focus:ring-sage-500 focus:outline-none text-sm"></textarea>
+                            </div>
+
+                            <div class="pt-2 flex justify-between items-center">
+                                <button type="button" onclick="goToStep(2)" class="px-5 py-2.5 border border-sage-300 text-sage-700 rounded-full font-medium hover:bg-sage-50 transition-all">
+                                    <i class="fa-solid fa-arrow-left mr-1"></i> Tilbage
+                                </button>
+                                <button type="submit" class="px-8 py-3.5 bg-sage-600 hover:bg-sage-700 text-white font-medium rounded-full shadow-lg transition-all transform hover:-translate-y-0.5">
+                                    Gennemfør Bestilling <i class="fa-solid fa-check ml-1.5"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- SUCCESS STATE -->
+                    <div id="booking-success" class="text-center py-8 space-y-4 hidden">
+                        <div class="w-16 h-16 bg-sage-100 text-sage-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-sage-900">Mange tak for din bestilling!</h3>
+                        <p class="text-sm text-sage-700 max-w-md mx-auto">
+                            Vi har modtaget din booking hos Michala. Du vil modtage en bekræftelse samt påmindelse på SMS og e-mail.
+                        </p>
+                        <div class="pt-4">
+                            <button onclick="resetBooking()" class="px-6 py-2.5 bg-sage-100 hover:bg-sage-200 text-sage-800 rounded-full text-sm font-semibold transition-all">
+                                Foretag en ny booking
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES & PRICE LIST SECTION -->
+        <section id="behandlinger" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-bold tracking-widest text-sage-600 uppercase">Gennemskuelige Priser</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-sage-900 mt-1">Behandlinger & Prisliste</h2>
+                <p class="text-sage-600 text-sm sm:text-base mt-2">
+                    Alle behandlinger udføres med høje faglige standarder og naturlige kvalitetsprodukter.
+                </p>
+            </div>
+
+            <!-- Price Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Category 1: Fodbehandlinger -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 border border-sage-100 shadow-sm relative overflow-hidden">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-sage-200">
+                        <div class="w-10 h-10 rounded-xl bg-sage-100 flex items-center justify-center text-sage-700 text-lg">
+                            <i class="fa-solid fa-spa"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-sage-900">Fodbehandlinger</h3>
+                    </div>
+
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex justify-between items-baseline border-b border-sage-100 pb-3">
+                            <div>
+                                <span class="font-semibold text-sage-900">Alm. Fodbehandling</span>
+                                <p class="text-xs text-sage-600">Inkl. urtesalt bad, beskæring, negleklip/slib & creme</p>
+                            </div>
+                            <span class="font-bold text-sage-800 shrink-0 ml-4">440 - 500 Kr.</span>
+                        </li>
+
+                        <li class="flex justify-between items-baseline border-b border-sage-100 pb-3">
+                            <div>
+                                <span class="font-semibold text-sage-900">Udvidet Fodbehandling</span>
+                                <p class="text-xs text-sage-600">For fødder der kræver mere tid og pleje</p>
+                            </div>
+                            <span class="font-bold text-sage-800 shrink-0 ml-4">520 - 750 Kr.</span>
+                        </li>
+
+                        <li class="flex justify-between items-baseline border-b border-sage-100 pb-3">
+                            <div>
+                                <span class="font-semibold text-sage-900">Fodbehandling m. Peeling & Fodmaske</span>
+                                <p class="text-xs text-sage-600">Dybdegående blødgørende og nærende luksusbehandling</p>
+                            </div>
+                            <span class="font-bold text-sage-800 shrink-0 ml-4">650 Kr.</span>
+                        </li>
+
+                        <li class="flex justify-between items-baseline border-b border-sage-100 pb-3">
+                            <div>
+                                <span class="font-semibold text-sage-900">Fodbehandling m. Gel lak (Hel farve)</span>
+                                <p class="text-xs text-sage-600">Holdbar og glansfuld lakering</p>
+                            </div>
+                            <span class="font-bold text-sage-800 shrink-0 ml-4">640 Kr.</span>
+                        </li>
+
+                        <li class="flex justify-between items-baseline">
+                            <div>
+                                <span class="font-semibold text-sage-900">Fodbehandling m. Gel lak (Fransk)</span>
+                                <p class="text-xs text-sage-600">Klassisk og elegant fransk kant på tæerne</p>
+                            </div>
+                            <span class="font-bold text-sage-800 shrink-0 ml-4">670 Kr.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Category 2: Special- & Delbehandlinger -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 border border-sage-100 shadow-sm relative overflow-hidden">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-sage-200">
+                        <div class="w-10 h-10 rounded-xl bg-sage-100 flex items-center justify-center text-sage-700 text-lg">
+                            <i class="fa-solid fa-kit-medical"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-sage-900">Målrettet Pleje & Tillæg</h3>
+                    </div>
+
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex justify-between items-baseline border-b border-sage-100 pb-3">
+                            <div>
+                                <span class="font-semibold text-sage-900">Behandling af 1 problemstilling</span>
+                                <p class="text-xs text-sage-600">Ligtorn, nedgroet negl ELLER vorte mm.</p>
+                            </div>
+                            <span class="font-bold text-sage-800 shrink-0 ml-4">130 Kr.</span>
+                        </li>
+
+                        <li class="flex justify-between items-baseline border-b border-sage-100 pb-3">
+                            <div>
+                                <span class="font-semibold text-sage-900">Behandling af 2 eller flere ting</span>
+                                <p class="text-xs text-sage-600">F.eks. kombinerede ligtorne, nedgroede negle eller vorter</p>
+                            </div>
+                            <span class="font-bold text-sage-800 shrink-0 ml-4">210 Kr.</span>
+                        </li>
+
+                        <li class="flex justify-between items-baseline border-b border-sage-100 pb-3">
+                            <div>
+                                <span class="font-semibold text-sage-900">Neglebøjle (Mod nedgroede negle)</span>
+                                <p class="text-xs text-sage-600">Efektiv smertelindring / 1 bøjle: 120 kr | 2 bøjler: 200 kr</p>
+                            </div>
+                            <span class="font-bold text-sage-800 shrink-0 ml-4">120 / 200 Kr.</span>
+                        </li>
+
+                        <li class="flex justify-between items-baseline border-b border-sage-100 pb-3">
+                            <div>
+                                <span class="font-semibold text-sage-900">Kunstig Negl (Genopbygning)</span>
+                                <p class="text-xs text-sage-600">1 kunstig negl: 120 kr | Flere kunstige negle: 240 kr</p>
+                            </div>
+                            <span class="font-bold text-sage-800 shrink-0 ml-4">120 / 240 Kr.</span>
+                        </li>
+
+                        <li class="flex justify-between items-baseline">
+                            <div>
+                                <span class="font-semibold text-sage-900">Klippe negle på fingrene</span>
+                                <p class="text-xs text-sage-600">Hurtig og sikker klipning af fingernagle</p>
+                            </div>
+                            <span class="font-bold text-sage-800 shrink-0 ml-4">80 Kr.</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Free Extra Services Cards -->
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-6 rounded-2xl bg-sage-50 border border-sage-200/80 flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-full bg-sage-200 text-sage-800 flex items-center justify-center shrink-0 text-xl">
+                        <i class="fa-solid fa-gift"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sage-900 text-base">Gratis Lakering som Service</h4>
+                        <p class="text-xs text-sage-700 mt-1 leading-relaxed">
+                            Medbring din egen almindelige neglelak, så lægger Michala den gerne på uden ekstra beregning som en god service i forbindelse med din behandling!
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-sage-50 border border-sage-200/80 flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-full bg-sage-200 text-sage-800 flex items-center justify-center shrink-0 text-xl">
+                        <i class="fa-solid fa-shoe-prints"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sage-900 text-base">Gratis Aflastning til Fodtøjet</h4>
+                        <p class="text-xs text-sage-700 mt-1 leading-relaxed">
+                            Oplever du overbelastning eller smertefulde trædepunkter? Michala laver altid gratis aflastning til dit fodtøj, hvis foden vurderes at have behov for det.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRACTICAL INFO, OPENING HOURS & CONTACT -->
+        <section id="kontakt" class="py-16 bg-sage-900 text-white relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    
+                    <!-- Left Column: Info & Hours -->
+                    <div class="lg:col-span-7 space-y-8">
+                        <div>
+                            <span class="text-xs font-bold tracking-widest text-sage-300 uppercase">Besøg Klinikken</span>
+                            <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-white mt-1">Åbningstider & Praktisk Info</h2>
+                            <p class="text-sage-200 text-sm mt-2">
+                                Du finder klinikken på Drejervænget 8 i Assens. Kom gerne lidt før tid og nyd vores massagestole i venteværelset.
+                            </p>
+                        </div>
+
+                        <!-- Opening Hours Table -->
+                        <div class="bg-sage-800/80 rounded-2xl p-6 border border-sage-700 max-w-lg">
+                            <h3 class="font-serif font-semibold text-lg text-sage-100 mb-4 border-b border-sage-700 pb-2">Åbningstider</h3>
+                            <div class="space-y-2 text-sm text-sage-200">
+                                <div class="flex justify-between">
+                                    <span>Mandag</span>
+                                    <span class="font-semibold text-white">09:00 - 15:00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Tirsdag</span>
+                                    <span class="font-semibold text-white">10:00 - 18:00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Onsdag</span>
+                                    <span class="font-semibold text-white">09:00 - 15:00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Torsdag</span>
+                                    <span class="font-semibold text-white">09:00 - 15:00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Fredag</span>
+                                    <span class="font-semibold text-white">09:00 - 14:00</span>
+                                </div>
+                                <div class="flex justify-between text-sage-400">
+                                    <span>Lørdag - Søndag</span>
+                                    <span>Lukket</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Afbudspolitik Card -->
+                        <div class="bg-amber-900/20 border border-amber-600/40 rounded-2xl p-5 max-w-lg flex items-start gap-4">
+                            <i class="fa-solid fa-circle-exclamation text-amber-400 text-xl shrink-0 mt-0.5"></i>
+                            <div class="text-xs leading-relaxed text-amber-100">
+                                <strong class="text-amber-300 font-semibold text-sm block mb-1">Vigtig information vedr. Afbud:</strong>
+                                Ved udeblivelse opkræves et gebyr på <strong>270 kr.</strong> hvis du ikke melder afbud pr. telefon, e-mail eller SMS senest <strong>24 timer før</strong> den aftalte tid.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Contact Details & Quick Contact Form -->
+                    <div class="lg:col-span-5">
+                        <div class="bg-white text-sage-900 rounded-3xl p-6 sm:p-8 shadow-xl">
+                            <h3 class="font-serif text-2xl font-semibold mb-6">Kontakt Klinikken</h3>
+
+                            <div class="space-y-4 mb-8 text-sm">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-sage-100 text-sage-700 flex items-center justify-center shrink-0">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-sage-500 font-medium">Adresse</p>
+                                        <p class="font-semibold">Drejervænget 8, 5610 Assens</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-sage-100 text-sage-700 flex items-center justify-center shrink-0">
+                                        <i class="fa-solid fa-phone"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-sage-500 font-medium">Telefon / SMS</p>
+                                        <a href="tel:36200221" class="font-semibold text-sage-700 hover:text-sage-900 underline">36 20 02 21</a>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-sage-100 text-sage-700 flex items-center justify-center shrink-0">
+                                        <i class="fa-solid fa-square-parking"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-sage-500 font-medium">Parkering & Adgang</p>
+                                        <p class="font-semibold">Egen parkering & handicapvenlige forhold</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Send Quick Message Form -->
+                            <form onsubmit="handleContactSubmit(event)" class="space-y-3 pt-4 border-t border-sage-100">
+                                <h4 class="text-xs font-bold text-sage-600 uppercase tracking-wider">Send besked til Michala</h4>
+                                <input type="text" required placeholder="Dit navn" class="w-full p-3 bg-sage-50 border border-sage-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sage-500">
+                                <input type="tel" required placeholder="Telefonnummer" class="w-full p-3 bg-sage-50 border border-sage-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sage-500">
+                                <textarea rows="3" required placeholder="Hvad kan jeg hjælpe dig med?" class="w-full p-3 bg-sage-50 border border-sage-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sage-500"></textarea>
+                                <button type="submit" class="w-full py-3 bg-sage-700 hover:bg-sage-800 text-white font-medium rounded-xl text-sm transition-all">
+                                    Send Besked
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-sage-950 text-sage-400 py-8 border-t border-sage-800 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <p class="font-serif text-sage-200 font-medium text-sm">Den naturlige fodplejer v/ Michala Mikkelsen</p>
+                <p class="text-sage-500">Drejervænget 8, 5610 Assens • Tlf: 36 20 02 21</p>
+            </div>
+            <p>© 2026 Den naturlige fodplejer. Alle rettigheder forbeholdes.</p>
+        </div>
+    </footer>
+
+    <!-- KUNDELOGIN MODAL -->
+    <div id="login-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full relative shadow-2xl animate-fade-in">
+            <button onclick="toggleModal('login-modal')" class="absolute top-4 right-4 text-sage-400 hover:text-sage-700 text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-full bg-sage-100 text-sage-700 flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <h3 class="font-serif text-2xl font-bold text-sage-900">Kundelogin</h3>
+                <p class="text-xs text-sage-600 mt-1">Se dine bookede tider og historik</p>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-sage-700 mb-1">E-mail eller Telefon</label>
+                    <input type="text" required class="w-full p-3 bg-sage-50 border border-sage-200 rounded-xl text-sm focus:ring-2 focus:ring-sage-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-sage-700 mb-1">Adgangskode / Engangskode</label>
+                    <input type="password" required class="w-full p-3 bg-sage-50 border border-sage-200 rounded-xl text-sm focus:ring-2 focus:ring-sage-500 focus:outline-none">
+                </div>
+                <button type="submit" class="w-full py-3 bg-sage-600 hover:bg-sage-700 text-white font-medium rounded-xl text-sm transition-all shadow-md">
+                    Log ind
+                </button>
+            </form>
+
+            <div class="mt-4 text-center">
+                <a href="#" class="text-xs text-sage-600 hover:underline">Glemt adgangskode?</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        
+        let currentStep = 1;
+        let selectedServiceData = null;
+        let selectedTime = null;
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Toggle Modal
+        function toggleModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.toggle('hidden');
+        }
+
+        // Service Selection
+        function selectService(input) {
+            // Unselect previous card styling
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.classList.remove('border-sage-600', 'bg-sage-50', 'ring-2', 'ring-sage-500');
+                card.classList.add('border-sage-200', 'bg-white');
+            });
+
+            // Highlight chosen
+            const card = input.closest('.service-card');
+            card.classList.remove('border-sage-200', 'bg-white');
+            card.classList.add('border-sage-600', 'bg-sage-50', 'ring-2', 'ring-sage-500');
+
+            selectedServiceData = input.value; // string format: Title|Duration|Price
+            
+            // Enable Next Button
+            const nextBtn = document.getElementById('btn-to-step-2');
+            nextBtn.disabled = false;
+            nextBtn.classList.remove('opacity-60', 'cursor-not-allowed', 'bg-sage-300');
+            nextBtn.classList.add('bg-sage-600', 'hover:bg-sage-700');
+        }
+
+        // Wizard Navigation
+        function goToStep(step) {
+            currentStep = step;
+
+            // Hide all steps
+            document.getElementById('booking-step-1').classList.add('hidden');
+            document.getElementById('booking-step-2').classList.add('hidden');
+            document.getElementById('booking-step-3').classList.add('hidden');
+            document.getElementById('booking-success').classList.add('hidden');
+
+            // Show current
+            document.getElementById(`booking-step-${step}`).classList.remove('hidden');
+
+            // Update Progress Bar Circles
+            const s1 = document.getElementById('step-btn-1');
+            const s2 = document.getElementById('step-btn-2');
+            const s3 = document.getElementById('step-btn-3');
+            const line = document.getElementById('step-line');
+
+            if (step === 1) {
+                line.style.width = '0%';
+                s2.className = 'relative z-10 w-9 h-9 rounded-full bg-sage-100 text-sage-600 font-semibold text-sm flex items-center justify-center border border-sage-200';
+                s3.className = 'relative z-10 w-9 h-9 rounded-full bg-sage-100 text-sage-600 font-semibold text-sm flex items-center justify-center border border-sage-200';
+            } else if (step === 2) {
+                line.style.width = '50%';
+                s2.className = 'relative z-10 w-9 h-9 rounded-full bg-sage-600 text-white font-semibold text-sm flex items-center justify-center shadow-md';
+                s3.className = 'relative z-10 w-9 h-9 rounded-full bg-sage-100 text-sage-600 font-semibold text-sm flex items-center justify-center border border-sage-200';
+
+                if (selectedServiceData) {
+                    const parts = selectedServiceData.split('|');
+                    document.getElementById('selected-service-badge').innerText = `${parts[0]} (${parts[2]})`;
+                }
+            } else if (step === 3) {
+                line.style.width = '100%';
+                s3.className = 'relative z-10 w-9 h-9 rounded-full bg-sage-600 text-white font-semibold text-sm flex items-center justify-center shadow-md';
+
+                // Update summary
+                if (selectedServiceData) {
+                    const parts = selectedServiceData.split('|');
+                    document.getElementById('summary-service').innerText = `${parts[0]} (${parts[1]} - ${parts[2]})`;
+                }
+                const dateVal = document.getElementById('booking-date').value;
+                document.getElementById('summary-datetime').innerText = `${dateVal} kl. ${selectedTime || ''}`;
+            }
+        }
+
+        // Time slot selection
+        function selectTimeSlot(btn) {
+            document.querySelectorAll('.time-btn').forEach(b => {
+                b.classList.remove('bg-sage-600', 'text-white', 'border-sage-600');
+                b.classList.add('bg-white', 'text-sage-800', 'border-sage-200');
+            });
+
+            btn.classList.remove('bg-white', 'text-sage-800', 'border-sage-200');
+            btn.classList.add('bg-sage-600', 'text-white', 'border-sage-600');
+
+            selectedTime = btn.innerText;
+            validateStep2();
+        }
+
+        function validateStep2() {
+            const dateVal = document.getElementById('booking-date').value;
+            const nextBtn = document.getElementById('btn-to-step-3');
+
+            if (dateVal && selectedTime) {
+                nextBtn.disabled = false;
+                nextBtn.classList.remove('opacity-60', 'cursor-not-allowed', 'bg-sage-300');
+                nextBtn.classList.add('bg-sage-600', 'hover:bg-sage-700');
+            }
+        }
+
+        // Complete Booking Event
+        function completeBooking(e) {
+            e.preventDefault();
+            document.getElementById('booking-step-3').classList.add('hidden');
+            document.getElementById('booking-success').classList.remove('hidden');
+        }
+
+        // Reset Booking Flow
+        function resetBooking() {
+            selectedServiceData = null;
+            selectedTime = null;
+            document.getElementById('booking-form').reset();
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.classList.remove('border-sage-600', 'bg-sage-50', 'ring-2', 'ring-sage-500');
+                card.classList.add('border-sage-200', 'bg-white');
+            });
+            goToStep(1);
+        }
+
+        // Mock handlers
+        function handleLogin(e) {
+            e.preventDefault();
+            alert('Tak for din login forespørgsel. Du er nu logget ind på kundesiden.');
+            toggleModal('login-modal');
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            alert('Tak for din besked! Michala vil vende tilbage til dig hurtigst muligt.');
+            e.target.reset();
+        }
+
+        // Set default minimum date in datepicker to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('booking-date').setAttribute('min', today);
+    </script>
+</body>
+</html>
